@@ -339,7 +339,7 @@ abstract class Zend_Validate_Db_Abstract extends Zend_Validate_Abstract
             $select,
             array('value' => $value), // this should work whether db supports positional or named params
             Zend_Db::FETCH_ASSOC
-            );
+        );
 
         return $result;
     }
