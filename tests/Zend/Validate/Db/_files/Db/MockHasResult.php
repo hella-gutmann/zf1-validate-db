@@ -39,13 +39,6 @@ class Db_MockHasResult extends Zend_Db_Adapter_Abstract
         $this->_supportsParametersValues = $supportsParametersValues;
     }
 
-    private array $expectedBind;
-
-    public function setExpectedBind(array $bind): void
-    {
-        $this->expectedBind = $bind;
-    }
-
     /**
      * Returns an array to emulate a result
      *
@@ -56,8 +49,8 @@ class Db_MockHasResult extends Zend_Db_Adapter_Abstract
      */
     public function fetchRow($sql, $bind = array(), $fetchMode = null)
     {
-        if (isset($this->expectedBind) && array_diff_assoc($this->expectedBind, $bind)) {
-            return null;
+        if (!$this->supportsParameters('named') && !isset($bind[0])) {
+            throw new InvalidArgumentException(__METHOD__ . ': does not accept unknown named parameters');
         }
         return array('one' => 'one');
     }

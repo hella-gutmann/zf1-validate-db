@@ -242,14 +242,12 @@ class Zend_Validate_Db_NoRecordExistsTest extends PHPUnit\Framework\TestCase
         $validator = new Zend_Validate_Db_RecordExists('users', 'field1', null, $this->_adapterHasResult);
         $wherePart = $validator->getSelect()->getPart('where');
         $this->assertEquals($wherePart[0], '("field1" = ?)');
-        $this->_adapterHasResult->setExpectedBind([0 => 81]);
         $this->assertTrue($validator->isValid(81));
 
         $this->_adapterHasResult->setSupportsParametersValues(array('named' => true, 'positional' => true));
         $validator = new Zend_Validate_Db_RecordExists('users', 'field1', null, $this->_adapterHasResult);
         $wherePart = $validator->getSelect()->getPart('where');
         $this->assertEquals($wherePart[0], '("field1" = :value)');
-        $this->_adapterHasResult->setExpectedBind(['value' => 81]);
         $this->assertTrue($validator->isValid(81));
     }
 }
